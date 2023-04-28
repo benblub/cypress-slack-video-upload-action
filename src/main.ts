@@ -10,7 +10,7 @@ async function run(): Promise<void> {
     const token = core.getInput('token')
     const channels = core.getInput('channels')
     const workdir = core.getInput('workdir') || 'cypress'
-    const messageText = github.context.payload.ref
+    const messageText = 'test'
 
     core.debug(`Token: ${token}`)
     core.debug(`Channels: ${channels}`)
