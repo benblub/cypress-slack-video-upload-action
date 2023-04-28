@@ -5,7 +5,7 @@
   "description": "Github action that takes the generated screenshots and videos from a Cypress test and uploads them to Slack",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && ncc build dist/index.js --license licenses.txt",
     "dev": "tsc --watch & ncc build --source-map --license licenses.txt --watch",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",

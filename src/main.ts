@@ -10,9 +10,7 @@ async function run(): Promise<void> {
     const token = core.getInput('token')
     const channels = core.getInput('channels')
     const workdir = core.getInput('workdir') || 'cypress'
-    const messageText =
-      core.getInput('message-text') ||
-      "A Cypress test just finished. I've placed the screenshots and videos in this thread. Good pie!"
+    const messageText = github.context.payload.ref
 
     core.debug(`Token: ${token}`)
     core.debug(`Channels: ${channels}`)
@@ -38,7 +36,7 @@ async function run(): Promise<void> {
 
     core.debug('Sending initial slack message')
     const result = await slack.chat.postMessage({
-      text: "I've got test results coming in from Cypress. Hold tight ...",
+      text: github.context.payload.ref,
       channel: channels
     })
 
@@ -84,8 +82,6 @@ async function run(): Promise<void> {
 
       core.debug('...done!')
     }
-
-    console.log(`The event payload ref: ${github.context.payload.ref}`);
 
     core.debug('Updating message to indicate a successful upload')
     await slack.chat.update({
