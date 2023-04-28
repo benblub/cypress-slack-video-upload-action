@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import * as github from '@actions/github'
 import { createReadStream } from 'fs'
 import walkSync from 'walk-sync'
 import { WebClient } from '@slack/web-api'
@@ -84,11 +85,13 @@ async function run(): Promise<void> {
       core.debug('...done!')
     }
 
+    console.log(`The event payload ref: ${github.context.payload.ref}`);
+
     core.debug('Updating message to indicate a successful upload')
     await slack.chat.update({
       ts: threadID,
       channel: channelId,
-      text: messageText
+      text: github.context.payload.ref
     })
 
     core.setOutput('result', 'Bingo bango bongo!')
